@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -119,7 +120,7 @@ const Dashboard = () => {
       'Education History', 'Political Views', 'Religious Views', 'Sexual Orientation',
       'Income Level', 'Assets', 'Debts', 'Credit Score', 'Insurance Info', 'Medical History',
       'Family Members', 'Emergency Contacts', 'Government ID', 'Passport Number',
-      'Driver's License', 'Social Security Number', 'Tax Info'
+      'Driver License', 'Social Security Number', 'Tax Info'
     ];
 
     // Known companies with their specific data
@@ -621,4 +622,74 @@ const Dashboard = () => {
             
             <TabsContent value="all" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {currentCompanies.
+                {currentCompanies.map((company) => (
+                  <CompanyCard key={company.id} company={company} />
+                ))}
+              </div>
+              
+              {totalPages > 1 && (
+                <Pagination className="mt-8">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        onClick={() => paginate(currentPage - 1)} 
+                        className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                    
+                    {renderPaginationItems()}
+                    
+                    <PaginationItem>
+                      <PaginationNext 
+                        onClick={() => paginate(currentPage + 1)}
+                        className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </TabsContent>
+            
+            <TabsContent value="high-risk" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCompanies
+                  .filter(company => company.riskLevel === 'high')
+                  .slice((currentPage - 1) * companiesPerPage, currentPage * companiesPerPage)
+                  .map((company) => (
+                    <CompanyCard key={company.id} company={company} />
+                  ))
+                }
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="pending" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCompanies
+                  .filter(company => company.status === 'pending')
+                  .slice((currentPage - 1) * companiesPerPage, currentPage * companiesPerPage)
+                  .map((company) => (
+                    <CompanyCard key={company.id} company={company} />
+                  ))
+                }
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="removed" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCompanies
+                  .filter(company => company.status === 'removed')
+                  .slice((currentPage - 1) * companiesPerPage, currentPage * companiesPerPage)
+                  .map((company) => (
+                    <CompanyCard key={company.id} company={company} />
+                  ))
+                }
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Dashboard;
