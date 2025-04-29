@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Search, Settings, User } from 'lucide-react';
+import { Search, Settings, User, Eye } from 'lucide-react';
 import CompanyCard, { CompanyData } from '@/components/CompanyCard';
 import DataSummary from '@/components/DataSummary';
 import { useNavigate } from 'react-router-dom';
