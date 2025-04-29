@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -436,10 +435,14 @@ const Dashboard = () => {
   // Generate the full companies data
   const companiesData: CompanyData[] = generateCompanies();
 
+  // Enhanced search functionality to search across name, category, and dataPoints
   const filteredCompanies = searchQuery 
     ? companiesData.filter(company => 
         company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        company.category.toLowerCase().includes(searchQuery.toLowerCase())
+        company.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        company.dataPoints.some(dataPoint => 
+          dataPoint.toLowerCase().includes(searchQuery.toLowerCase())
+        )
       )
     : companiesData;
 
